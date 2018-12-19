@@ -1,81 +1,72 @@
-// Make sure Your Browser works with ES7
-
-class Snowflake {
+// window width is 2 * 150 for some reson
+class Drop {
 	constructor() {
-		this.x = 0;
-		this.y = 0;
-		this.vx = 0;
-		this.vy = 0;
+		this.x = 150;
+		this.y = 5;
+		this.yv = 1;
+		this.xv = 1;
 		this.radius = 0;
-		this.alpha = 0;
-		this.reset = this.reset.bind(this);
-		this.reset();
+		this.update.bind(this);
+		this.fall = this.fall.bind(this);
+		this.update();
 	}
 
-	reset() {
-		// init Position
-		this.x = this.randomBetween(0, window.innerWidth);
-		// this.y = this.randomBetween(0, -window.innerHeight);
-		this.y = this.randomBetween(0, window.innerHeight);
+	fall() {
+		this.y += this.yv;
+		this.x += this.xv;
+		if (this.y > window.innerHeight / 4) {
+			this.update();
+		}
+	}
 
-		// x,y speed
-		this.vy = this.randomBetween(-3, 3);
-		this.vx = this.randomBetween(2, 5);
-
-		// Bigger snow or ..
-		this.radius = this.randomBetween(1, 4);
-		this.alpha = this.randomBetween(0.1, 0.9);
+	update() {
+		this.x = this.randomBetween(0, 300);
+		this.y = this.randomBetween(0, 5);
+		this.yv = this.randomBetween(1, 3) * 0.5;
+		this.xv = this.randomBetween(-2, 2) * 0.5;
+		this.radius = this.randomBetween(1, 3) * 0.5;
+		// this.alpha = this.randomBetween(0, 0.9);
 	}
 
 	randomBetween(min, max) {
 		return min + Math.random() * (max - min);
 	}
-
-	update() {
-		this.x += this.vx;
-		this.y += this.vy;
-		if (this.y + this.radius > window.innerWidth) {
-			this.reset();
-		}
-	}
 }
 
 class Snow {
 	constructor() {
-		console.log("show");
-		this.canvas = document.createElement("canvas");
-		this.ctx = this.canvas.getContext("2d");
-		document.body.appendChild(this.canvas);
+		this.canv = document.createElement("canvas");
+		this.ctx = this.canv.getContext("2d");
+		document.body.appendChild(this.canv);
 
-		this.update = this.update.bind(this);
-		requestAnimationFrame(this.update);
-		this.createSnowflakes();
+		this.draw = this.draw.bind(this);
+		this.createDrops();
+		this.draw();
 	}
 
-	createSnowflakes() {
-		const maxP = 150;
-		this.flakes = [];
-		for (let s = 0; s < maxP; s++) {
-			this.flakes.push(new Snowflake());
+	createDrops() {
+		const maxP = 100;
+		this.drops = [];
+		for (let i = 0; i < maxP; i++) {
+			this.drops.push(new Drop());
 		}
 	}
 
-	update() {
+	draw() {
 		this.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-		for (let flake of this.flakes) {
-			flake.update();
-			this.ctx.save();
+		this.ctx.save();
+		for (let drop of this.drops) {
 			this.ctx.beginPath();
-			this.ctx.fillStyle = "red";
-			this.ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
+			this.ctx.fillStyle = "white";
+			this.ctx.arc(drop.x, drop.y, drop.radius, 0, 2 * Math.PI);
 			this.ctx.fill();
-			this.ctx.globalAlpha = flake.alpha;
+			this.ctx.globalAlpha = drop.alpha;
 			this.ctx.closePath();
+			drop.fall();
 			this.ctx.restore();
 		}
-
-		requestAnimationFrame(this.update);
+		requestAnimationFrame(this.draw);
 	}
 }
 
-const snow = new Snow();
+new Snow();
