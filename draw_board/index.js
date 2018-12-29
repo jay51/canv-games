@@ -1,5 +1,4 @@
 // make Canvas and context
-
 let canv = document.createElement("canvas");
 canv.height = window.innerHeight;
 canv.width = window.innerWidth;
@@ -52,3 +51,9 @@ canv.addEventListener("mouseup", function() {
 console.log(canv.height, canv.width);
 console.log(document.body.clientHeight, document.body.clientWidth);
 console.log(window.innerHeight, window.innerWidth);
+
+// select btn
+clearBtn = document.getElementById("clear");
+clearBtn.addEventListener("click", function() {
+	ctx.clearRect(0, 0, canv.width, canv.height);
+});
