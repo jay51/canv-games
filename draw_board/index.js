@@ -67,6 +67,7 @@ clearBtn.addEventListener("click", function() {
 // actviate eraser. Click again to activate pen again
 eraseBtn.addEventListener("click", function() {
 	erase = !erase;
+	this.classList.toggle("erase-selected");
 });
 
 // set a pen color
