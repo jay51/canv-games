@@ -54,14 +54,17 @@ class Board {
 
 Board.initalize();
 
+// Should pass the same func to add/removeEventListener
+const draw = Board.draw.bind(Board);
+
 Board.canv.addEventListener("mousedown", function() {
 	// this == canvas
-	this.addEventListener("mousemove", Board.draw.bind(Board));
+	this.addEventListener("mousemove", draw);
 });
 
 Board.canv.addEventListener("mouseup", function() {
-	// remove the mousemove event
+	// Stop drawing onMouseup
 	Board.prevX = null;
 	Board.prevY = null;
-	this.removeEventListener("mousemove", Board.draw.bind(Board));
+	Board.canv.removeEventListener("mousemove", draw);
 });
