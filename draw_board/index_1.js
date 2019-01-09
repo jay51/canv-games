@@ -1,24 +1,29 @@
+// this within a static method refers to the Board class
+// (constructor function) itself (if you call it via
+// Board.methodName(...)).
+
 class Board {
-	constructor() {
+	static initalize() {
 		// Create Canvas
 		this.canv = document.createElement("canvas");
-		this.ctx = canv.getContext("2d");
+		this.ctx = this.canv.getContext("2d");
 
-		canv.height = window.innerHeight;
-		canv.width = window.innerWidth;
-		document.body.appendChild(canv);
+		this.canv.height = window.innerHeight;
+		this.canv.width = window.innerWidth;
+		document.body.appendChild(this.canv);
 
-		this.prevX, prevY;
+		this.prevX, this.prevY;
 		this.lineWidth = 25;
 		this.color = "white"; //Default color
-		this.prevColor = color;
+		this.prevColor = this.color;
 		this.erase = false;
 	}
 
 	/*
   Todo: Improvments
   set attr in constructor and save it
-  then restore it in the draw method
+	then restore it in the draw method
+	Take the event listener outside of the class 
    */
 
 	static draw({ x, y }) {
@@ -48,15 +53,21 @@ class Board {
 	}
 
 	static listenForDraw() {
+		console.log(this);
 		this.canv.addEventListener("mousedown", function() {
 			this.canv.addEventListener("mousemove", Board.draw);
 		});
 	}
 
 	static listenForUnDraw() {
-		prevX = null;
-		prevY = null;
-		// remove the mousemove event
-		this.canv.removeEventListener("mousemove", Board.draw);
+		this.canv.addEventListener("mouseup", function() {
+			// remove the mousemove event
+			prevX = null;
+			prevY = null;
+			this.canv.removeEventListener("mousemove", Board.draw);
+		});
 	}
 }
+
+Board.initalize();
+Board.listenForDraw();
