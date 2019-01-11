@@ -17,6 +17,9 @@ class Board {
 		this.color = "white"; //Default color
 		this.prevColor = this.color;
 		this.erase = false;
+		// Bindings
+		this.draw = Board.draw.bind(this);
+		this.clearCanv = Board.clearCanv.bind(this);
 	}
 
 	/*
@@ -32,13 +35,13 @@ class Board {
 		this.ctx.arc(x, y, this.lineWidth / 2, 0, Math.PI * 2);
 		this.ctx.fill();
 		this.ctx.closePath();
-		this.ctx.save();
+		// this.ctx.save();
 
 		// If we have prevX/Y draw a line from prevX/Y
 		// To currentX/Y
 		if (this.prevX && this.prevY) {
 			this.ctx.beginPath();
-			this.ctx.restore();
+			// this.ctx.restore();
 			this.ctx.moveTo(this.prevX, this.prevY);
 			this.ctx.strokeStyle = this.color;
 			this.ctx.lineTo(x, y);
@@ -50,21 +53,31 @@ class Board {
 		this.prevX = x;
 		this.prevY = y;
 	}
+
+	// Clear everything on canvas
+	static clearCanv(x = 0, y = 0) {
+		this.ctx.clearRect(x, y, this.canv.width, this.canv.height);
+	}
 }
 
 Board.initalize();
-
 // Should pass the same func to add/removeEventListener
-const draw = Board.draw.bind(Board);
 
 Board.canv.addEventListener("mousedown", function() {
 	// this == canvas
-	this.addEventListener("mousemove", draw);
+	this.addEventListener("mousemove", Board.draw);
 });
 
 Board.canv.addEventListener("mouseup", function() {
 	// Stop drawing onMouseup
 	Board.prevX = null;
 	Board.prevY = null;
-	Board.canv.removeEventListener("mousemove", draw);
+	Board.canv.removeEventListener("mousemove", Board.draw);
+});
+
+const clearBtn = document.getElementById("clear");
+
+// clearBtn.addEventListener("click", Board.clearCanv);
+clearBtn.addEventListener("click", function() {
+	Board.clearCanv();
 });

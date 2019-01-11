@@ -12,9 +12,16 @@ let lineWidth = 10;
 let color = "white";
 let prevColor = color;
 let erase = false;
+let eraseColor = "black";
+
+/* 
+	Todo: improvments 
+		-Refactore the draw function to earse function and draw function
+		- Use clearRect method to clear pixels on cavas 
+*/
 
 function draw(e) {
-	if (erase) color = "black";
+	if (erase) color = eraseColor;
 	else color = prevColor;
 	ctx.beginPath();
 	ctx.fillStyle = color;
@@ -53,10 +60,11 @@ canv.addEventListener("mouseup", function() {
 });
 
 // Buttons
-clearBtn = document.getElementById("clear");
-eraseBtn = document.getElementById("erase");
-colorInput = document.getElementById("mouseColor");
-sizeSelect = document.getElementById("select-size");
+let clearBtn = document.getElementById("clear");
+let eraseBtn = document.getElementById("erase");
+let colorInput = document.getElementById("mouseColor");
+let sizeSelect = document.getElementById("select-size");
+let bgSelect = document.getElementById("select-bg");
 
 // clear Everything on canvas
 clearBtn.addEventListener("click", function() {
@@ -77,3 +85,15 @@ colorInput.addEventListener("change", function(e) {
 sizeSelect.addEventListener("change", function(e) {
 	lineWidth = sizeSelect.value;
 });
+
+bgSelect.addEventListener("change", function(e) {
+	// change background color
+	canv.style.background = bgSelect.value;
+
+	// change eraeser color
+	eraseColor = "white";
+});
+
+if (performance.navigation.type == 1) {
+	console.log("refresh");
+}
