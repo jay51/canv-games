@@ -55,7 +55,7 @@ class Board {
 	}
 
 	// Clear everything on canvas
-	static clearCanv(x = 0, y = 0) {
+	static clearCanv(e, x = 0, y = 0) {
 		this.ctx.clearRect(x, y, this.canv.width, this.canv.height);
 	}
 }
@@ -77,7 +77,7 @@ Board.canv.addEventListener("mouseup", function() {
 
 const clearBtn = document.getElementById("clear");
 
-// clearBtn.addEventListener("click", Board.clearCanv);
-clearBtn.addEventListener("click", function() {
-	Board.clearCanv();
-});
+clearBtn.addEventListener("click", Board.clearCanv);
+//clearBtn.addEventListener("click", function() {
+//	Board.clearCanv();
+//});
