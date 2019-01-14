@@ -16,47 +16,45 @@ let eraseColor = "black";
 
 /* 
 	Todo: improvments 
-		-Refactore the draw function to earse function and draw function
-		- Use clearRect method to clear pixels on cavas 
 */
 
 function draw(e) {
-	if (erase) color = eraseColor;
-	else color = prevColor;
-	ctx.beginPath();
-	ctx.fillStyle = color;
-	ctx.arc(e.x, e.y, lineWidth / 2, 0, Math.PI * 2);
-	ctx.fill();
-	ctx.closePath();
-	ctx.beginPath();
-	ctx.save();
+    if (erase) color = eraseColor;
+    else color = prevColor;
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.arc(e.x, e.y, lineWidth / 2, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.closePath();
+    ctx.beginPath();
+    ctx.save();
 
-	if (prevX && prevY) {
-		ctx.restore();
-		ctx.moveTo(prevX, prevY);
-		ctx.strokeStyle = color;
-		ctx.lineTo(e.x, e.y);
-		ctx.lineWidth = lineWidth;
-		ctx.stroke();
-		ctx.closePath();
-	}
+    if (prevX && prevY) {
+        ctx.restore();
+        ctx.moveTo(prevX, prevY);
+        ctx.strokeStyle = color;
+        ctx.lineTo(e.x, e.y);
+        ctx.lineWidth = lineWidth;
+        ctx.stroke();
+        ctx.closePath();
+    }
 
-	// store the next point
-	prevY = e.y;
-	prevX = e.x;
+    // store the next point
+    prevY = e.y;
+    prevX = e.x;
 }
 
 // draw a white cerical onMouseDown
 canv.addEventListener("mousedown", function(e) {
-	//listen for mosuemove and draw
-	canv.addEventListener("mousemove", draw);
+    //listen for mosuemove and draw
+    canv.addEventListener("mousemove", draw);
 });
 
 canv.addEventListener("mouseup", function() {
-	prevX = null;
-	prevY = null;
-	// remove the mousemove event
-	canv.removeEventListener("mousemove", draw);
+    prevX = null;
+    prevY = null;
+    // remove the mousemove event
+    canv.removeEventListener("mousemove", draw);
 });
 
 // Buttons
@@ -68,32 +66,32 @@ let bgSelect = document.getElementById("select-bg");
 
 // clear Everything on canvas
 clearBtn.addEventListener("click", function() {
-	ctx.clearRect(0, 0, canv.width, canv.height);
+    ctx.clearRect(0, 0, canv.width, canv.height);
 });
 
 // actviate eraser. Click again to activate pen again
 eraseBtn.addEventListener("click", function() {
-	erase = !erase;
-	this.classList.toggle("erase-selected");
+    erase = !erase;
+    this.classList.toggle("erase-selected");
 });
 
 // set a pen color
 colorInput.addEventListener("change", function(e) {
-	prevColor = e.target.value;
+    prevColor = e.target.value;
 });
 
 sizeSelect.addEventListener("change", function(e) {
-	lineWidth = sizeSelect.value;
+    lineWidth = sizeSelect.value;
 });
 
 bgSelect.addEventListener("change", function(e) {
-	// change background color
-	canv.style.background = bgSelect.value;
+    // change background color
+    canv.style.background = bgSelect.value;
 
-	// change eraeser color
-	eraseColor = "white";
+    // change eraeser color
+    eraseColor = "white";
 });
 
 if (performance.navigation.type == 1) {
-	console.log("refresh");
+    console.log("refresh");
 }
