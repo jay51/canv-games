@@ -84,13 +84,13 @@ sizeSelect.addEventListener("change", function(e) {
     lineWidth = sizeSelect.value;
 });
 
-bgSelect.addEventListener("change", function(e) {
-    // change background color
-    canv.style.background = bgSelect.value;
+// bgSelect.addEventListener("change", function(e) {
+//     // change background color
+//     canv.style.background = bgSelect.value;
 
-    // change eraeser color
-    eraseColor = "white";
-});
+//     // change eraeser color
+//     eraseColor = "white";
+// });
 
 if (performance.navigation.type == 1) {
     console.log("refresh");

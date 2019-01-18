@@ -30,7 +30,7 @@
 				left: 5.5rem;
 			}
 
-			.erase-selected {
+			.btn-selected {
 				position: absolute;
 				left: 5.5rem;
 				opacity: 0.7;
@@ -50,6 +50,14 @@
 				position: absolute;
 				left: 19.5rem;
 			}
+			#light {
+				position: absolute;
+				left: 19.4rem;
+			}
+			#dark {
+				position: absolute;
+				left: 24.9rem;
+			}
 		</style>
 	</head>
 	<body>
@@ -61,11 +69,8 @@
 			<option value="20">20</option>
 			<option value="25">25</option>
 		</select>
-
-		<select class="bg-color" id="select-bg">
-			<option selected value="black">Dark</option>
-			<option value="white">Light</option>
-		</select>
+		<button id="dark" data-color="black">Dark</button>
+		<button id="light" data-color="White">Light</button>
 
 		<script src="index_1.js"></script>
 	</body>
