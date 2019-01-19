@@ -21,6 +21,7 @@ class Board {
 		// Bindings
 		this.draw = Board.draw.bind(this);
 		this.clearCanv = Board.clearCanv.bind(this);
+		this.takeScreenShot = this.takeScreenShot.bind(this);
 	}
 
 	/*
@@ -65,6 +66,11 @@ class Board {
 	static clearCanv(e, x = 0, y = 0) {
 		this.ctx.clearRect(x, y, this.canv.width, this.canv.height);
 	}
+
+	static takeScreenShot() {
+		//returns a dataurl containing a represintation of the image, Default to png
+		this.image = this.canv.toDataURL("image/jpeg", 1.0);
+	}
 }
 
 Board.initalize();
@@ -88,6 +94,13 @@ const colorInput = document.getElementById("mouseColor");
 const sizeSelect = document.getElementById("select-size");
 const bgLight = document.getElementById("light");
 const bgDark = document.getElementById("dark");
+const linktoimg = document.getElementById("linktoimg");
+
+linktoimg.addEventListener("click", function() {
+	Board.takeScreenShot();
+	linktoimg.href = Board.image;
+	console.log(Board.image);
+});
 
 // Clear Canvas
 clearBtn.addEventListener("click", Board.clearCanv);
